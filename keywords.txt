@@ -1,0 +1,31 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Adafruit_BME280	KEYWORD1
+Adafruit_Sensor	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+init	KEYWORD2
+setSampling	KEYWORD2
+takeForcedMeasurement	KEYWORD2
+readTemperature	KEYWORD2
+readPressure	KEYWORD2
+readHumidity	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+bme	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
