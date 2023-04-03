@@ -34,7 +34,7 @@
 Adafruit_BME280::Adafruit_BME280() {
 }
 
-bool Adafruit_BME280::begin(uint8_t addr, TwoWire* theWire) {
+bool Adafruit_BME280::begin(TwoWire* theWire, uint8_t addr) {
     i2c_dev = new Adafruit_I2CDevice(addr, theWire);
     if (!i2c_dev->begin())
         return false;

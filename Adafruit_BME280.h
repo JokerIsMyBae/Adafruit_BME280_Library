@@ -166,15 +166,16 @@ class Adafruit_BME280 {
      * @brief  class constructor
      */
     Adafruit_BME280();
-    /**
-   * @brief  Initialise sensor with given parameters / settings
 
-   * @param addr the I2C address the device can be found on
-   * @param theWire the I2C object to use, defaults to &Wire
-   *
-   * @returns true on success, false otherwise
-   */
-    bool begin(uint8_t addr = BME280_ADDRESS, TwoWire* theWire = &Wire);
+    /**
+     * @brief  Initialise sensor with given parameters / settings
+     *
+     * @param theWire the I2C object to use, defaults to &Wire
+     * @param addr the I2C address the device can be found on
+     *
+     * @returns true on success, false otherwise
+     */
+    bool begin(TwoWire* theWire = &Wire, uint8_t addr = BME280_ADDRESS);
 
     /**
      * @brief  Initialise sensor with given parameters / settings
