@@ -185,6 +185,19 @@ class Adafruit_BME280 {
     bool init();
 
     /**
+     * @brief  Reads the factory-set coefficients and saves the data in a
+     * private struct.
+     */
+    void readCoefficients();
+
+    /**
+     *   @brief return true if chip is busy reading calibration data
+     *
+     *   @returns true if reading calibration, false otherwise
+     */
+    bool isReadingCalibration();
+
+    /**
      * @brief  setup sensor with given parameters / settings
      *
      * @param mode the power mode to use for the sensor
@@ -228,19 +241,6 @@ class Adafruit_BME280 {
 
   protected:
     Adafruit_I2CDevice* i2c_dev = NULL;  ///< Pointer to I2C bus interface
-
-    /**
-     * @brief  Reads the factory-set coefficients and saves the data in a
-     * private struct.
-     */
-    void _readCoefficients();
-
-    /**
-     *   @brief return true if chip is busy reading calibration data
-     *
-     *   @returns true if reading calibration, false otherwise
-     */
-    bool _isReadingCalibration();
 
     /**
      * @brief  Writes an 8 bit value over I2C

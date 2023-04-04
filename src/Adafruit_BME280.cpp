@@ -51,15 +51,6 @@ bool Adafruit_BME280::init() {
     // this makes sure the IIR is off, etc.
     _write8(BME280_REGISTER_SOFTRESET, 0xB6);
 
-    // wait for chip to wake up.
-    delay(10);
-
-    // if chip is still reading calibration, delay
-    while (_isReadingCalibration())
-        delay(10);
-
-    _readCoefficients();  // read trimming parameters, see DS 4.2.2
-
     return true;
 }
 
@@ -91,30 +82,16 @@ void Adafruit_BME280::setSampling(sensor_mode mode,
 }
 
 bool Adafruit_BME280::takeForcedMeasurement() {
-    bool return_value = false;
     // If we are in forced mode, the BME sensor goes back to sleep after each
     // measurement and we need to set it to forced mode once at this point, so
     // it will take the next measurement and then return to sleep again.
     // In normal mode simply does new measurements periodically.
     if (_measReg.mode == MODE_FORCED) {
-        return_value = true;
         // set to forced mode, i.e. "take next measurement"
         _write8(BME280_REGISTER_CONTROL, _measReg.get());
-        // Store current time to measure the timeout
-        uint32_t timeout_start = millis();
-        // wait until measurement has been completed, otherwise we would read
-        // the the values from the last measurement or the timeout occurred
-        // after 2 sec.
-        while (_read8(BME280_REGISTER_STATUS) & 0x08) {
-            // In case of a timeout, stop the while loop
-            if ((millis() - timeout_start) > 2000) {
-                return_value = false;
-                break;
-            }
-            delay(1);
-        }
+        return true;
     }
-    return return_value;
+    return false;
 }
 
 float Adafruit_BME280::readTemperature(void) {
@@ -200,7 +177,7 @@ float Adafruit_BME280::readHumidity(void) {
     return (float)H / 1024.0;
 }
 
-void Adafruit_BME280::_readCoefficients(void) {
+void Adafruit_BME280::readCoefficients(void) {
     _bme280_calib.dig_T1 = _read16_LE(BME280_REGISTER_DIG_T1);
     _bme280_calib.dig_T2 = _readS16_LE(BME280_REGISTER_DIG_T2);
     _bme280_calib.dig_T3 = _readS16_LE(BME280_REGISTER_DIG_T3);
@@ -225,7 +202,7 @@ void Adafruit_BME280::_readCoefficients(void) {
     _bme280_calib.dig_H6 = (int8_t)_read8(BME280_REGISTER_DIG_H6);
 }
 
-bool Adafruit_BME280::_isReadingCalibration(void) {
+bool Adafruit_BME280::isReadingCalibration(void) {
     uint8_t const rStatus = _read8(BME280_REGISTER_STATUS);
 
     return (rStatus & (1 << 0)) != 0;
