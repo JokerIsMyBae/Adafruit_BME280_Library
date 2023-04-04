@@ -29,7 +29,7 @@
 /*!
  *  @brief  default I2C address
  */
-#define BME280_ADDRESS (0x76)
+#define BME280_ADDRESS 0x76
 
 /*!
  *  @brief Register addresses
@@ -186,9 +186,6 @@ class Adafruit_BME280 {
 
     /**
      * @brief  setup sensor with given parameters / settings
-     *
-     *   This is simply a overload to the normal begin()-function, so SPI users
-     *
      *
      * @param mode the power mode to use for the sensor
      * @param tempSampling the temp samping rate to use
