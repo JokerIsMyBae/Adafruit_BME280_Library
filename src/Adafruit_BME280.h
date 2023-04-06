@@ -191,11 +191,24 @@ class Adafruit_BME280 {
     void readCoefficients();
 
     /**
-     *   @brief return true if chip is busy reading calibration data
+     * @brief return true if chip is busy reading calibration data
      *
-     *   @returns true if reading calibration, false otherwise
+     * @returns true if reading calibration, false otherwise
      */
     bool isReadingCalibration();
+    /**
+     * @brief return true if chip is busy measuring
+     *
+     * @returns true if measuring, false otherwise
+     */
+    bool isMeasuring();
+
+    /**
+     * @brief reads status register
+     *
+     * @returns byte with value of status register
+     */
+    uint8_t getStatusRegister();
 
     /**
      * @brief  setup sensor with given parameters / settings

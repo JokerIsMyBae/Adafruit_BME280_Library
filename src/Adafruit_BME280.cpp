@@ -202,10 +202,20 @@ void Adafruit_BME280::readCoefficients(void) {
     _bme280_calib.dig_H6 = (int8_t)_read8(BME280_REGISTER_DIG_H6);
 }
 
-bool Adafruit_BME280::isReadingCalibration(void) {
-    uint8_t const rStatus = _read8(BME280_REGISTER_STATUS);
+bool Adafruit_BME280::isReadingCalibration() {
+    uint8_t const rStatus = getStatusRegister();
 
-    return (rStatus & (1 << 0)) != 0;
+    return (rStatus & 0x08);
+}
+
+bool Adafruit_BME280::isMeasuring() {
+    uint8_t const rStatus = getStatusRegister();
+
+    return (rStatus & (1 << 8)) != 0;
+}
+
+uint8_t Adafruit_BME280::getStatusRegister() {
+    return _read8(BME280_REGISTER_STATUS);
 }
 
 void Adafruit_BME280::_write8(byte reg, byte value) {
